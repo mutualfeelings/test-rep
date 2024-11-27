@@ -13,13 +13,15 @@ pipeline {
         stage ("docker login") {
             steps {
                 echo " ================== docker login ================== "
-                withCredentials([usernamePassword(credentialsId: 'dockerhub_mutualfeelings', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')])
-                sh """
+                withCredentials([usernamePassword(credentialsId: 'dockerhub_mutualfeelings', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh """
                 docker login -u $USERNAME -p $PASSWORD
                 """
+                }
+                
             }
         }
-        
+
         stage ("docker build") {
             steps {
                 echo " ================== start build image ================== "
